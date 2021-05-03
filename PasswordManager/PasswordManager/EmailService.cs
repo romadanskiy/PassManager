@@ -23,8 +23,10 @@ namespace PasswordManager
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.yandex.ru", 465, true);
-                await client.AuthenticateAsync("passmanager@yandex.ru", "nlffkrvbycmlzwee");
+                //await client.ConnectAsync("smtp.yandex.ru", 465, true);
+                //await client.AuthenticateAsync("passmanager@yandex.ru", "nlffkrvbycmlzwee");
+                await client.ConnectAsync("smtp.gmail.com", 465, true);
+                await client.AuthenticateAsync("passmanager.info@gmail.com", "PAROLitis123");
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);
