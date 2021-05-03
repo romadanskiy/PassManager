@@ -2,13 +2,16 @@
 @{
     ViewBag.Title = "Список пользователей";
 }
- 
+
+<h2>Список пользователей</h2>
+
 <a asp-action="Create">Добавить пользователя</a>
  
 <table class="table">
     <tr>
         <th>Email</th>
         <th>Email Confirmed</th>
+        <th>Role</th>
         <th>Action</th>
         <th></th>
     </tr>
@@ -17,6 +20,9 @@
         <tr>
             <td>@user.Email</td>
             <td>@user.EmailConfirmed</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-controller="Roles" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
+            </td>
             <td>
                 <form asp-action="Delete" asp-route-id="@user.Id" method="post">
                     <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
