@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using System;
+using MimeKit;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
 
@@ -12,7 +13,9 @@ namespace PasswordManager
 
             emailMessage.From.Add(new MailboxAddress("Администрация сайта PasswordManager", "passmanager@yandex.ru"));
             emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.Headers.Add("Precedence", "bulk");
             emailMessage.Subject = subject;
+            emailMessage.Date = DateTimeOffset.Now;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
                 Text = message
