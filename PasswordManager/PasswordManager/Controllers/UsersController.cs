@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using PasswordManager.Models;
@@ -7,6 +8,7 @@ using PasswordManager.ViewModels;
 
 namespace PasswordManager.Controllers
 {
+    [Authorize(Roles="admin")]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
@@ -29,6 +31,8 @@ namespace PasswordManager.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "user");
+                    
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action(
                         "ConfirmEmail",
