@@ -15,20 +15,23 @@ namespace PasswordManager.Controllers
     {
         RoleManager<IdentityRole> _roleManager;
         UserManager<User> _userManager;
+        
         public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
         }
+        
         public IActionResult Index() => View(_roleManager.Roles.ToList());
  
         public IActionResult Create() => View();
+        
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> Create(CreateRoleViewModel model)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (ModelState.IsValid)
             {
-                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
+                var result = await _roleManager.CreateAsync(new IdentityRole(model.Role));
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -41,7 +44,7 @@ namespace PasswordManager.Controllers
                     }
                 }
             }
-            return View(name);
+            return View(model);
         }
          
         [HttpPost]
@@ -76,6 +79,7 @@ namespace PasswordManager.Controllers
  
             return NotFound();
         }
+        
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {

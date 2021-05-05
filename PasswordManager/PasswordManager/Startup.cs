@@ -2,6 +2,7 @@ using PasswordManager.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ namespace PasswordManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
             const string localConStr = "Server=localhost;Port=5432;Database=PasswordManagerDB;User Id=postgres;Password=PAROLsekret777;";
             const string herokuConStr = "Host=ec2-54-216-185-51.eu-west-1.compute.amazonaws.com;Database=d83gfranh6pqjq;Username=njudcwfmbpluwi;Password=afec3844e82fed075f576e9e261907c929604204d4036cda2f581e3e40d17c3a;sslmode=Require;TrustServerCertificate=true";
             
@@ -29,7 +31,9 @@ namespace PasswordManager
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
-
+            */
+            //services.AddTransient<IEmailSender,EmailService>();
+            services.AddRazorPages();
             services.AddControllersWithViews();
         }
 
@@ -59,6 +63,7 @@ namespace PasswordManager
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

@@ -125,8 +125,7 @@ namespace PasswordManager.Controllers
                 User user = await _userManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
-                    IdentityResult result = 
-                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if(result.Succeeded)
                     {
                         return RedirectToAction("Index");
