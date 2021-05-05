@@ -2,10 +2,11 @@
 using MimeKit;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace PasswordManager
 {
-    public class EmailService
+    public class EmailService : IEmailSender
     {
         public async Task SendEmailAsync(string email, string subject, string message)
         {
