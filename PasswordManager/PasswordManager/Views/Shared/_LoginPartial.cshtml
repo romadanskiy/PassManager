@@ -8,7 +8,12 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User).Split('@')[0]</a>
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <div style="display: flex;">
+                    <div>@UserManager.GetUserName(User).Split('@')[0]</div>
+                    <div style="opacity: .7;">@@@UserManager.GetUserName(User).Split('@')[1]</div>
+                </div>
+            </a>
         </li>
         if (@User.IsInRole("admin"))
         {
@@ -18,7 +23,7 @@
         }
         <li class="nav-item">
             <form class="form-inline" asp-controller="Account" asp-action="LogOff" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" style="border: 0" class="nav-link btn btn-link text-dark">Logout</button>
             </form>
         </li>
     }
