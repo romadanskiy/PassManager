@@ -32,7 +32,7 @@ namespace PasswordManager
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
             */
-            services.AddTransient<IEmailSender,EmailService>();
+            //services.AddTransient<IEmailSender,EmailService>();
             services.AddRazorPages();
             services.AddControllersWithViews();
         }

@@ -22,12 +22,11 @@ namespace PasswordManager.Areas.Identity.Pages.Account.Manage
 
         public EmailModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IEmailSender emailSender)
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+            _emailSender = new EmailService();
         }
 
         public string Username { get; set; }
