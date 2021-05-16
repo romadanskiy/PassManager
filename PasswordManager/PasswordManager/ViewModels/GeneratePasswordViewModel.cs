@@ -8,5 +8,6 @@
         public bool HasUppercase { get; set; }
         public bool HasDigit { get; set; }
         public bool HasNonAlphanumeric { get; set; }
+        public string GeneratedPassword { get; set; }
     }
 }

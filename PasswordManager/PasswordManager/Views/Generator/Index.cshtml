@@ -10,14 +10,19 @@
 <form method="post" asp-controller="Generator" asp-action="Generate">
     <button name="action" value="generate">Сгенерировать пароль</button>
     
-    <input type="text" value="@ViewBag.GeneratedPassword" disabled="disabled">
+    <input type="text" value="@Model.GeneratedPassword" disabled="disabled">
+    <input type="hidden" asp-for="GeneratedPassword" value="@Model.GeneratedPassword">
     
-    <button name="action" value="save">Сохранить</button>
-    
-    <div><input type="checkbox" asp-for="IsConfigured" checked="checked"> Настроить:</div>
-    <div>Длина пароля <input type="number" asp-for="PasswordLength" value="12"></div>
-    <div><input type="checkbox" asp-for="HasLowercase" checked="checked"> Прописные буквы</div>
-    <div><input type="checkbox" asp-for="HasUppercase" checked="checked"> Заглавные буквы</div>
-    <div><input type="checkbox" asp-for="HasDigit" checked="checked"> Цифры</div>
-    <div><input type="checkbox" asp-for="HasNonAlphanumeric" checked="checked"> Символы</div>
+    @if (@Model.GeneratedPassword != null)
+    {
+        <button name="action" value="save">Сохранить</button>
+        <button type="button" class="copy">Скопировать</button>
+    }
+
+    <div><input type="checkbox" asp-for="IsConfigured" value="@Model.IsConfigured" onchange="this.value=this.checked"> Настроить:</div>
+    <div>Длина пароля <input type="number" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
+    <div><input type="checkbox" asp-for="HasLowercase" value="@Model.HasLowercase" onchange="this.value=this.checked"> Прописные буквы</div>
+    <div><input type="checkbox" asp-for="HasUppercase" value="@Model.HasUppercase" onchange="this.value=this.checked"> Заглавные буквы</div>
+    <div><input type="checkbox" asp-for="HasDigit" value="@Model.HasDigit" onchange="this.value=this.checked"> Цифры</div>
+    <div><input type="checkbox" asp-for="HasNonAlphanumeric" value="@Model.HasNonAlphanumeric" onchange="this.value=this.checked"> Символы</div>
 </form>

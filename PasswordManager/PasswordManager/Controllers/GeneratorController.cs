@@ -7,7 +7,16 @@ namespace PasswordManager.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var model = new GeneratePasswordViewModel()
+            {
+                IsConfigured = false,
+                PasswordLength = 12,
+                HasLowercase = true,
+                HasUppercase = true,
+                HasDigit = true,
+                HasNonAlphanumeric = true
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -16,10 +25,10 @@ namespace PasswordManager.Controllers
             switch (action)
             {
                 case "generate":
-                    ViewBag.GeneratedPassword = "PaRol456!23";
-                    return View("Index");
+                    model.GeneratedPassword = "PaRol456!23";
+                    return View("Index", model);
                 case "save":
-                    return Content("Сохранить пароль");
+                    return Content($"Сохранить пароль: {model.GeneratedPassword}");
                 default:
                     return Content("Неопознанное действие");
             }
