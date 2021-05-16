@@ -9,5 +9,15 @@
         public bool HasDigit { get; set; }
         public bool HasNonAlphanumeric { get; set; }
         public string GeneratedPassword { get; set; }
+
+        public void SetDefault()
+        {
+            IsConfigured = false;
+            PasswordLength = 12;
+            HasLowercase = true;
+            HasUppercase = true;
+            HasDigit = true;
+            HasNonAlphanumeric = true;
+        }
     }
 }

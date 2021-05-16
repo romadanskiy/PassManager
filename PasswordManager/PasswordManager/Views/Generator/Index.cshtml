@@ -20,37 +20,14 @@
     }
 
     <div><input type="checkbox" id="enableAll" asp-for="IsConfigured" value="@Model.IsConfigured" onchange="this.value=this.checked"> Настроить:</div>
-    <div>Длина пароля <input type="number" class="check" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
+    <div>Длина пароля: <input type="number" class="check" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
     <div><input type="checkbox" class="check" asp-for="HasLowercase" value="@Model.HasLowercase" onchange="this.value=this.checked"> Прописные буквы</div>
     <div><input type="checkbox" class="check" asp-for="HasUppercase" value="@Model.HasUppercase" onchange="this.value=this.checked"> Заглавные буквы</div>
     <div><input type="checkbox" class="check" asp-for="HasDigit" value="@Model.HasDigit" onchange="this.value=this.checked"> Цифры</div>
     <div><input type="checkbox" class="check" asp-for="HasNonAlphanumeric" value="@Model.HasNonAlphanumeric" onchange="this.value=this.checked"> Символы</div>
 </form>
 
-<script>
-    window.onload = function () {
-        let enableAllCheckBox = document.getElementById("enableAll");
-        let enableAll = enableAllCheckBox.checked;
-        let inputs = document.getElementsByClassName("check");
-        
-        if (!enableAll) {
-            for (let i = 0; i < inputs.length; i++) {
-                inputs[i].setAttribute('disabled', 'disabled');
-            }
-        }
-        
-        enableAllCheckBox.addEventListener('click', () => {
-            enableAll = enableAllCheckBox.checked;
-            if (!enableAll) {
-                for (let i = 0; i < inputs.length; i++) {
-                    inputs[i].setAttribute('disabled', 'disabled');
-                }
-            }
-            else {
-                for (let i = 0; i < inputs.length; i++) {
-                    inputs[i].removeAttribute('disabled');
-                }
-            }
-        });
-    };
-</script>
+@section Scripts
+{
+    <script src="js/generatorCheckboxes.js"></script>
+}
