@@ -19,7 +19,7 @@ namespace PasswordManager.Controllers
             switch (action)
             {
                 case "generate":
-                    model = Generate(model);
+                    model = GeneratePassword(model);
                     return RedirectToAction("Index", model);
                 case "save":
                     return Content($"Сохранить пароль: {model.GeneratedPassword}");
@@ -27,24 +27,20 @@ namespace PasswordManager.Controllers
                     return Content("Неопознанное действие");
             }
         }
-
-        private static GeneratePasswordViewModel Generate(GeneratePasswordViewModel model)
-        {
-            return model.IsConfigured ? GeneratePassword(model) : GenerateRandomPassword(model);
-        }
-
-        private static GeneratePasswordViewModel GenerateRandomPassword(GeneratePasswordViewModel model)
-        {
-            var randomPassword = "RaNdOm4568!5";
-            model.SetDefault();
-            model.GeneratedPassword = randomPassword;
-            return model;
-        }
         
         private static GeneratePasswordViewModel GeneratePassword(GeneratePasswordViewModel model)
         {
-            var configuredPassword = "ConFIguReD46@)4";
-            model.GeneratedPassword = configuredPassword;
+            if (!model.IsConfigured)
+                model.SetDefault();
+
+            var generator = new Generator();
+            model.GeneratedPassword = generator.GeneratePassword(
+                model.PasswordLength,
+                model.HasLowercase,
+                model.HasUppercase,
+                model.HasDigit,
+                model.HasNonAlphanumeric);
+            
             return model;
         }
     }
