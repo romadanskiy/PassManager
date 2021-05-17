@@ -1,0 +1,33 @@
+﻿@model PasswordManager.ViewModels.GeneratePasswordViewModel
+
+@{
+    ViewData["Title"] = "Generator";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Это генератор паролей</p>
+<form method="post" asp-controller="Generator" asp-action="Generate">
+    <button name="action" value="generate">Сгенерировать пароль</button>
+    
+    <input type="text" value="@Model.GeneratedPassword" disabled="disabled">
+    <input type="hidden" asp-for="GeneratedPassword" value="@Model.GeneratedPassword">
+    
+    @if (@Model.GeneratedPassword != null)
+    {
+        <button name="action" value="save">Сохранить</button>
+        <button type="button" class="copy">Скопировать</button>
+    }
+
+    <div><input type="checkbox" id="enableAll" asp-for="IsConfigured" value="@Model.IsConfigured" onchange="this.value=this.checked"> Настроить:</div>
+    <div>Длина пароля: <input type="number" min="4" max="30" class="check" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasLowercase" value="@Model.HasLowercase" onchange="this.value=this.checked"> Прописные буквы</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasUppercase" value="@Model.HasUppercase" onchange="this.value=this.checked"> Заглавные буквы</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasDigit" value="@Model.HasDigit" onchange="this.value=this.checked"> Цифры</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasNonAlphanumeric" value="@Model.HasNonAlphanumeric" onchange="this.value=this.checked"> Символы</div>
+</form>
+
+@section Scripts
+{
+    <script src="js/generatorCheckboxes.js"></script>
+}
