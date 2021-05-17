@@ -20,11 +20,11 @@
     }
 
     <div><input type="checkbox" id="enableAll" asp-for="IsConfigured" value="@Model.IsConfigured" onchange="this.value=this.checked"> Настроить:</div>
-    <div>Длина пароля: <input type="number" class="check" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
-    <div><input type="checkbox" class="check" asp-for="HasLowercase" value="@Model.HasLowercase" onchange="this.value=this.checked"> Прописные буквы</div>
-    <div><input type="checkbox" class="check" asp-for="HasUppercase" value="@Model.HasUppercase" onchange="this.value=this.checked"> Заглавные буквы</div>
-    <div><input type="checkbox" class="check" asp-for="HasDigit" value="@Model.HasDigit" onchange="this.value=this.checked"> Цифры</div>
-    <div><input type="checkbox" class="check" asp-for="HasNonAlphanumeric" value="@Model.HasNonAlphanumeric" onchange="this.value=this.checked"> Символы</div>
+    <div>Длина пароля: <input type="number" min="4" max="30" class="check" asp-for="PasswordLength" value="@Model.PasswordLength"></div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasLowercase" value="@Model.HasLowercase" onchange="this.value=this.checked"> Прописные буквы</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasUppercase" value="@Model.HasUppercase" onchange="this.value=this.checked"> Заглавные буквы</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasDigit" value="@Model.HasDigit" onchange="this.value=this.checked"> Цифры</div>
+    <div><input type="checkbox" class="check check-box" asp-for="HasNonAlphanumeric" value="@Model.HasNonAlphanumeric" onchange="this.value=this.checked"> Символы</div>
 </form>
 
 @section Scripts
