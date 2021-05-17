@@ -9,6 +9,8 @@ namespace PasswordManager.Models
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
+        public DbSet<Credential> Credentials { get; set; }
+        
         public ApplicationContext()
         {
         }

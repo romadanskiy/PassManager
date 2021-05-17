@@ -8,5 +8,6 @@ namespace PasswordManager.Models
 {
     public class User : IdentityUser
     {
+        public List<Credential> Credentials { get; set; }
     }
 }
