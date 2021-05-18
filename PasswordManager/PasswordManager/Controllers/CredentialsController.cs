@@ -71,5 +71,50 @@ namespace PasswordManager.Controllers
 
             return RedirectToAction("Index");
         }
+        
+        public IActionResult Edit(int id)
+        {
+            var context = new ApplicationContext();
+            
+            var credential = context.Credentials
+                .FirstOrDefault(c => c.Id == id);
+
+            if (credential == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditCredentialViewModel
+            {
+                Id = id,
+                Source = credential.Source,
+                Login = credential.Login,
+                Password = credential.Password
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditCredentialViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var context = new ApplicationContext();
+                var credential = context.Credentials
+                    .FirstOrDefault(c => c.Id == model.Id);
+
+                if (credential != null)
+                {
+                    credential.Source = model.Source;
+                    credential.Login = model.Login;
+                    credential.Password = model.Password;
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(model);
+        }
     }
 }
