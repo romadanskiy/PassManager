@@ -11,7 +11,7 @@ namespace PasswordManager.Controllers
     [Authorize(Roles="admin")]
     public class UsersController : Controller
     {
-        UserManager<User> _userManager;
+        private UserManager<User> _userManager;
  
         public UsersController(UserManager<User> userManager)
         {
