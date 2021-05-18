@@ -54,5 +54,22 @@ namespace PasswordManager.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var context = new ApplicationContext();
+            
+            var credential = context.Credentials
+                .FirstOrDefault(c => c.Id == id);
+
+            if (credential != null)
+            {
+                context.Credentials.Remove(credential);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
