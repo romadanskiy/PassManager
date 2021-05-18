@@ -31,6 +31,15 @@ namespace PasswordManager.Controllers
         {
             return View();
         }
+
+        public IActionResult SaveFromGenerator(string generatedPassword)
+        {
+            var model = new CreateCredentialViewModel
+            {
+                Password = generatedPassword
+            };
+            return View("Create", model);
+        }
         
         [HttpPost]
         public async Task<IActionResult> Create(CreateCredentialViewModel model)

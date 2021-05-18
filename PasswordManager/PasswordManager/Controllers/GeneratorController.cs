@@ -22,7 +22,8 @@ namespace PasswordManager.Controllers
                     model = GeneratePassword(model);
                     return RedirectToAction("Index", model);
                 case "save":
-                    return Content($"Сохранить пароль: {model.GeneratedPassword}");
+                    return RedirectToAction("SaveFromGenerator", "Credentials",
+                        new {generatedPassword = model.GeneratedPassword});
                 default:
                     return Content("Неопознанное действие");
             }
