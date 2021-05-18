@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -32,36 +33,41 @@ namespace PasswordManager.Controllers
             return View();
         }
 
-        public IActionResult SaveFromGenerator(string generatedPassword)
-        {
-            var model = new CreateCredentialViewModel
-            {
-                Password = generatedPassword
-            };
-            return View("Create", model);
-        }
-        
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCredentialViewModel model)
+        public async Task<IActionResult> Create(CreateCredentialViewModel model, string action)
         {
-            if (ModelState.IsValid)
+            switch (action)
             {
-                var context = new ApplicationContext();
-                
-                var user = await _userManager.GetUserAsync(User);
-                var credential = new Credential
+                case "create" when ModelState.IsValid:
                 {
-                    Source = model.Source, 
-                    Login = model.Login, 
-                    Password = model.Password, 
-                    UserId = user.Id
-                };
-                context.Credentials.Add(credential);
-                await context.SaveChangesAsync();
+                    var context = new ApplicationContext();
+                
+                    var user = await _userManager.GetUserAsync(User);
+                    var credential = new Credential
+                    {
+                        Source = model.Source, 
+                        Login = model.Login, 
+                        Password = model.Password, 
+                        UserId = user.Id
+                    };
+                    context.Credentials.Add(credential);
+                    await context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                case "create":
+                    return View(model);
+                case "generate":
+                {
+                    if (model.Source != null)
+                        HttpContext.Response.Cookies.Append("source", model.Source);
+                    if (model.Login != null)
+                        HttpContext.Response.Cookies.Append("login", model.Login);
+                    return RedirectToAction("Index", "Generator");
+                }
+                default:
+                    return Content("Неопознанное действие");
             }
-            return View(model);
         }
 
         [HttpPost]
@@ -124,6 +130,25 @@ namespace PasswordManager.Controllers
             }
 
             return View(model);
+        }
+        
+        public IActionResult SaveFromGenerator(string generatedPassword)
+        {
+            var model = new CreateCredentialViewModel
+            {
+                Password = generatedPassword
+            };
+            if (HttpContext.Request.Cookies.ContainsKey("source"))
+            {
+                model.Source = HttpContext.Request.Cookies["source"];
+                HttpContext.Response.Cookies.Delete("source");
+            }
+            if (HttpContext.Request.Cookies.ContainsKey("login"))
+            {
+                model.Login = HttpContext.Request.Cookies["login"];
+                HttpContext.Response.Cookies.Delete("login");
+            }
+            return View("Create", model);
         }
     }
 }
