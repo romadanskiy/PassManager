@@ -14,7 +14,6 @@ namespace PasswordManager.ViewModels
         
         [Required]
         [Display(Name = "Пароль")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
