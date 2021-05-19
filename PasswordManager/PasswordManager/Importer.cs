@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
+using System.Xml.Serialization;
 using PasswordManager.ViewModels;
 
 namespace PasswordManager
@@ -38,7 +40,10 @@ namespace PasswordManager
 
         private T ParseXmlContentString<T>(string contentString)
         {
-            return default(T);
+            var xmlSerializer = new XmlSerializer(typeof(T));
+            using var streamReader = new StringReader(contentString);
+            var model = (T) xmlSerializer.Deserialize(streamReader);
+            return model;
         }
     }
 }

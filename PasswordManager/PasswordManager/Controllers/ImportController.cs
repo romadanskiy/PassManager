@@ -27,7 +27,7 @@ namespace PasswordManager.Controllers
             
             var contentType = upload.ContentType;
 
-            if (contentType != "application/json" && contentType != "application/xml")
+            if (contentType != "application/json" && contentType != "application/xml" && contentType != "text/xml")
             {
                 TempData["importMessage"] = "Неподдерживаемый формат";
                 return RedirectToAction("Index");
@@ -49,6 +49,7 @@ namespace PasswordManager.Controllers
             {
                 "application/json" => new Importer(ImportType.Json),
                 "application/xml" => new Importer(ImportType.Xml),
+                "text/xml" => new Importer(ImportType.Xml),
                 _ => null
             };
             
