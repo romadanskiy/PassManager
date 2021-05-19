@@ -1,4 +1,5 @@
-﻿@model List<PasswordManager.ViewModels.ExportImportCredentialViewModel>
+﻿@using System.Text.Json
+@model List<PasswordManager.ViewModels.ExportImportCredentialViewModel>
 @{
     ViewData["Title"] = "Save";
 }
@@ -12,6 +13,14 @@
 else
 {
     <p>Найденно паролей: @Model.Count</p>
+                                     
+    var jsonModel = JsonSerializer.Serialize(Model);
+
+    <form method="post" asp-action="SaveAll" asp-route-jsonModel="@jsonModel">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Сохранить все</button>
+        </div>
+    </form>
 
     <table class="table">
         <tr>

@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PasswordManager.Models;
 using PasswordManager.ViewModels;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -17,6 +20,13 @@ namespace PasswordManager.Controllers
     [Authorize]
     public class ImportController : Controller
     {
+        private UserManager<User> _userManager;
+        
+        public ImportController(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+        
         public IActionResult Index()
         {
             return View();
@@ -60,11 +70,36 @@ namespace PasswordManager.Controllers
                 var importResult = importer?.ParseContentString<List<ExportImportCredentialViewModel>>(contentString);
                 return View(importResult);
             }
-            catch (Exception e)
+            catch
             {
                 TempData["importMessage"] = "Не удалось извлечь пароли из файла";
                 return RedirectToAction("Index");
             }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> SaveAll(string jsonModel)
+        {
+            var model = JsonSerializer.Deserialize<List<ExportImportCredentialViewModel>>(jsonModel);
+
+            if (model == null)
+                return RedirectToAction("Index");
+            
+            var context = new ApplicationContext();
+            var user = await _userManager.GetUserAsync(User);
+            foreach (var credentialToSave in model)
+            {
+                var newCredential = new Credential
+                {
+                    Source = credentialToSave.Source, 
+                    Login = credentialToSave.Login, 
+                    Password = credentialToSave.Password, 
+                    UserId = user.Id
+                };
+                context.Credentials.Add(newCredential);
+            }
+            await context.SaveChangesAsync();
+            return RedirectToAction("Index", "Credentials");
         }
     }
 }
