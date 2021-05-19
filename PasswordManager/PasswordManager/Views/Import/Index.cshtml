@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Import";
+}
+
+<h1>Импорт паролей</h1>
+
+<p>Загрузите пароли из файла</p>
+
+
+<form enctype="multipart/form-data" method="post" asp-action="Import">
+    <div class="form-group">
+        <label for="file">Поддерживаются файлы формата JSON и XML, эскпортированные с помощью нашего сервиса</label>
+        <input type="file" id="file" name="upload" accept="application/json, application/xml" class="form-control-file" required>
+    </div>
+    <div class="form-group">
+        <h6 class="text-danger">@TempData["importMessage"]</h6>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Загрузить</button>
+    </div>
+</form>

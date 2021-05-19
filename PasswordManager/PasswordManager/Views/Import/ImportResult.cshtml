@@ -1,0 +1,40 @@
+﻿@using System.Text.Json
+@model List<PasswordManager.ViewModels.ExportImportCredentialViewModel>
+@{
+    ViewData["Title"] = "Save";
+}
+
+<h1>Импортированные пароли</h1>
+
+@if (Model == null || Model.Count < 1)
+{
+    <h4>Ничего не найдено. Убедитесь, что используется файл, экспортированный с помощью нашего сервиса</h4>
+}
+else
+{
+    <p>Найденно паролей: @Model.Count</p>
+                                     
+    var jsonModel = JsonSerializer.Serialize(Model);
+
+    <form method="post" asp-action="SaveAll" asp-route-jsonModel="@jsonModel">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Сохранить все</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <tr>
+            <th>Источник</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+        </tr>
+        @foreach (var credential in Model)
+        {
+            <tr>
+                <td>@credential.Source</td>
+                <td>@credential.Login</td>
+                <td>@credential.Password</td>
+            </tr>
+        }
+    </table>
+}
