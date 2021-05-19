@@ -1,8 +1,6 @@
 # Password Manager
 ITIS / 4 sem 2 course / SemWork / Theme "Password Manager"
 
-</br>  
-
 [Trello Board](https://trello.com/b/ZZduxuR7/менеджер-паролей-4-sem)
 
 </br>  
