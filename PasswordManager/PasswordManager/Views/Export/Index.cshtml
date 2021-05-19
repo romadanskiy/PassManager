@@ -1,7 +1,28 @@
-﻿@{
+﻿@model List<Credential>
+@{
     ViewData["Title"] = "Export";
 }
 
 <h1>Экспорт данных</h1>
 
 <p>Сохранить свои пароли в файл</p>
+
+@if (Model == null || Model.Count < 1)
+{
+    <h5>У вас ещё нет сохранённых паролей</h5>
+}
+else
+{
+    <form asp-action="GetFile">
+        <div class="form-group">
+            <label for="type">Выберите тип:</label>
+            <select id="type" class="form-select" name="type">
+                <option selected value="json">JSON</option>
+                <option value="xml">XML</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Скачать</button>
+        </div>
+    </form>
+}
