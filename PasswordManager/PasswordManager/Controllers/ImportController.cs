@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PasswordManager.Controllers
 {
+    [Authorize]
     public class ImportController : Controller
     {
         public IActionResult Index()
@@ -53,9 +55,16 @@ namespace PasswordManager.Controllers
                 _ => null
             };
             
-            var importResult = importer?.ParseContentString<List<ExportImportCredentialViewModel>>(contentString);
-            
-            return View(importResult);
+            try
+            {
+                var importResult = importer?.ParseContentString<List<ExportImportCredentialViewModel>>(contentString);
+                return View(importResult);
+            }
+            catch (Exception e)
+            {
+                TempData["importMessage"] = "Не удалось извлечь пароли из файла";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
