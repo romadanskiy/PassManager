@@ -89,6 +89,7 @@ namespace PasswordManager.Controllers
             if (subscription != null)
             {
                 context.Subscriptions.Remove(subscription);
+                context.SaveChanges();
             }
             return RedirectToAction("Index");
         }

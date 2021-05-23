@@ -1,0 +1,22 @@
+﻿@model PasswordManager.ViewModels.SubscriptionsCatalogViewModel
+@{
+    ViewData["Title"] = "Каталог подписок";
+}
+
+<h1>Подписки</h1>
+
+<p>Купите подписку, чтобы получить расширенный доступ к сервису</p>
+
+<div class="card-deck">
+    @foreach (var feature in Model.AllFeatures)
+    {
+        <partial name="FeatureCardPartial" model="feature"/>
+    }
+</div>
+
+<div class="card-columns">
+        @foreach (var subscription in Model.AllSubscriptions)
+        {
+            <partial name="SubscriptionCardPartial" model="subscription"/>
+        }
+</div>
