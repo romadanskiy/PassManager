@@ -1,0 +1,16 @@
+﻿@model PasswordManager.ViewModels.EditFeaturesForSubscriptionViewModel
+@{
+    ViewBag.Title = "Изменнение доступа подписки";
+}
+
+<h2>Изменение доступа для подписки @Model.SubscriptionName</h2>
+
+<form method="post" asp-action="EditForSubscription">
+    <input type="hidden" name="subscriptionId" value="@Model.SubscriptionId">
+    @foreach (var feature in Model.AllFeatures)
+    {
+        <input type="checkbox" name="features" value="@feature.Id"
+               @(Model.SubscriptionFeatures.Contains(feature.Id) ? "checked=\"checked\"" : "") />@feature.Name <br />
+    }
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

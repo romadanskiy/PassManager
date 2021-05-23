@@ -17,7 +17,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace PasswordManager.Controllers
 {
-    [Authorize]
+    [Subscription("Import")]
     public class ImportController : Controller
     {
         private UserManager<User> _userManager;

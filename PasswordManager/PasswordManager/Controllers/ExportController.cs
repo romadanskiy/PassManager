@@ -10,7 +10,7 @@ using PasswordManager.ViewModels;
 
 namespace PasswordManager.Controllers
 {
-    [Authorize]
+    [Subscription("Export")]
     public class ExportController : Controller
     {
         private UserManager<User> _userManager;
