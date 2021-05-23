@@ -30,6 +30,7 @@ namespace PasswordManager
                 // отправляем на страинцу "Вход"
                 var signinRoute = SubscriptionNoAccessRoute.SigninRoute;
                 actionContext.Result = new RedirectToRouteResult(signinRoute);
+                return;
             }
             
             // Если пользователь админ, разрешаем доступ без проверки подписки.
@@ -55,7 +56,6 @@ namespace PasswordManager
             // Иначе отправляем на страинцу "Нет доступа".
             var noAccessRoute = SubscriptionNoAccessRoute.NoAccessRoute;
             actionContext.Result = new RedirectToRouteResult(noAccessRoute);
-
         }
     }
 }

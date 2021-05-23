@@ -20,7 +20,7 @@ namespace PasswordManager.Controllers
         public async Task<IActionResult> Subscriptions()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user.HasSubscription)
+            if (user is {HasSubscription: true})
                 return RedirectToAction("MySubscription");
             
             var context = new ApplicationContext();
@@ -44,7 +44,7 @@ namespace PasswordManager.Controllers
         public async Task<IActionResult> MySubscription()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (!user.HasSubscription)
+            if (user is not {HasSubscription: true})
                 return RedirectToAction("Subscriptions");
             
             var context = new ApplicationContext();
@@ -74,6 +74,9 @@ namespace PasswordManager.Controllers
         public async Task<IActionResult> BuySubscription(int subscriptionId)
         {
             var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+                return RedirectToAction("Login", "Account");
             
             var context = new ApplicationContext();
             var subscription = context.Subscriptions.FirstOrDefault(s => s.Id == subscriptionId);
