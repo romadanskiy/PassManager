@@ -21,6 +21,9 @@ namespace PasswordManager.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity is {IsAuthenticated: true})
+                return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
+            
             return View();
         }
 
@@ -83,6 +86,9 @@ namespace PasswordManager.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
+            if (User.Identity is {IsAuthenticated: true})
+                return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
+            
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
