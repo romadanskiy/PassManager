@@ -12,7 +12,9 @@
         }
     </ul>
     <div class="card-body">
-        <a class="btn btn-primary" asp-action="BuySubscription" asp-route-subscriptionId="@Model.Id">Купить</a>
+        <form asp-action="BuySubscription" asp-route-subscriptionId="@Model.Id">
+            <button class="btn btn-primary" type="submit">Купить</button>
+        </form>
     </div>
     <div class="card-footer">
         @Model.Price руб.

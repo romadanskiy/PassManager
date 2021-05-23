@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PasswordManager.ViewModels;
 
 namespace PasswordManager.Controllers
 {
+    [Subscription("Generator")]
     public class GeneratorController : Controller
     {
         public IActionResult Index(GeneratePasswordViewModel model)
