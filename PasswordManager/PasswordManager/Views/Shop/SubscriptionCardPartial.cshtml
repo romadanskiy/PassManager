@@ -12,7 +12,7 @@
         }
     </ul>
     <div class="card-body">
-        <a href="#" class="btn btn-primary">Купить</a>
+        <a class="btn btn-primary" asp-action="BuySubscription" asp-route-subscriptionId="@Model.Id">Купить</a>
     </div>
     <div class="card-footer">
         @Model.Price руб.
