@@ -1,0 +1,41 @@
+﻿@model PasswordManager.ViewModels.MySubscriptionCatalogViewModel
+@{
+    ViewData["Title"] = "Каталог подписок";
+}
+
+<h1>Текущая подписка</h1>
+
+<div class="card my-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.UsersSubscription.Name</h5>
+        <p class="card-text">@Model.UsersSubscription.Description</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var feature in @Model.UsersSubscription.Features)
+        {
+            <li class="list-group-item">✔ @feature.Name</li>
+        }
+    </ul>
+    <div class="card-body">
+        <form asp-action="CancelSubscription" asp-route-subscriptionId="@Model.UsersSubscription.Id">
+            <button class="btn btn-primary" type="submit">Отменить</button>
+        </form>
+    </div>
+</div>
+
+<h1>Каталог подписок</h1>
+<p>Вы можете отменить текущую подписку и купить новую</p>
+
+<div class="card-deck">
+    @foreach (var feature in Model.AllFeatures)
+    {
+        <partial name="FeatureCardPartial" model="feature"/>
+    }
+</div>
+
+<div class="card-columns">
+    @foreach (var subscription in Model.AllSubscriptions)
+    {
+        <partial name="SubscriptionNotToBuyCardPartial" model="subscription"/>
+    }
+</div>

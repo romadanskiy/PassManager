@@ -1,0 +1,17 @@
+﻿@model Subscription
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Description</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var feature in @Model.Features)
+        {
+            <li class="list-group-item">✔ @feature.Name</li>
+        }
+    </ul>
+    <div class="card-footer">
+        @Model.Price руб.
+    </div>
+</div>

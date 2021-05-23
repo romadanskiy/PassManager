@@ -17,8 +17,12 @@ namespace PasswordManager.Controllers
             _userManager = userManager;
         }
         
-        public IActionResult Subscriptions()
+        public async Task<IActionResult> Subscriptions()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user.HasSubscription)
+                return RedirectToAction("MySubscription");
+            
             var context = new ApplicationContext();
             
             var subscriptions = context.Subscriptions
@@ -28,7 +32,40 @@ namespace PasswordManager.Controllers
 
             var features = context.Features.ToList();
 
-            var model = new SubscriptionsCatalogViewModel {AllSubscriptions = subscriptions, AllFeatures = features};
+            var model = new SubscriptionsCatalogViewModel
+            {
+                AllSubscriptions = subscriptions, 
+                AllFeatures = features,
+            };
+            
+            return View(model);
+        }
+
+        public async Task<IActionResult> MySubscription()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (!user.HasSubscription)
+                return RedirectToAction("Subscriptions");
+            
+            var context = new ApplicationContext();
+
+            var usersSubscription = context.Subscriptions.FirstOrDefault(s => s.Id == user.SubscriptionId);
+            if (usersSubscription == null)
+                return RedirectToAction("Subscriptions");
+            
+            var subscriptions = context.Subscriptions
+                .Include(s => s.Features)
+                .OrderBy(s => s.Price)
+                .ToList();
+
+            var features = context.Features.ToList();
+
+            var model = new MySubscriptionCatalogViewModel
+            {
+                UsersSubscription = usersSubscription,
+                AllSubscriptions = subscriptions, 
+                AllFeatures = features
+            };
             
             return View(model);
         }
@@ -60,6 +97,27 @@ namespace PasswordManager.Controllers
             }
 
             return RedirectToAction("Subscriptions");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelSubscription(int subscriptionId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            user.HasSubscription = false;
+            user.SubscriptionId = default;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Subscriptions");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return RedirectToAction("MySubscription");
         }
     }
 }
