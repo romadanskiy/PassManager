@@ -85,7 +85,7 @@ namespace PasswordManager.Controllers
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Credentials");
+                    return RedirectToAction("MySubscription");
                 }
                 else
                 {
