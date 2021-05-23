@@ -5,7 +5,7 @@
 
 <h1>Текущая подписка</h1>
 
-<div class="card my-3">
+<div class="card border-primary my-3">
     <div class="card-body">
         <h5 class="card-title">@Model.UsersSubscription.Name</h5>
         <p class="card-text">@Model.UsersSubscription.Description</p>
@@ -18,7 +18,7 @@
     </ul>
     <div class="card-body">
         <form asp-action="CancelSubscription" asp-route-subscriptionId="@Model.UsersSubscription.Id">
-            <button class="btn btn-primary" type="submit">Отменить</button>
+            <button class="btn btn-outline-secondary" type="submit">Отменить</button>
         </form>
     </div>
 </div>
