@@ -33,42 +33,30 @@ namespace PasswordManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult Import(IFormFile upload)
+        public IActionResult ImportResult(IFormFile upload)
         {
-            if (upload == null) return RedirectToAction("Index");
+            if (upload == null)
+                return RedirectToAction("Index");
             
             var contentType = upload.ContentType;
+            var importer = Importer.CreateImporter(contentType);
 
-            if (contentType != "application/json" && contentType != "application/xml" && contentType != "text/xml")
+            if (importer == null)
             {
                 TempData["importMessage"] = "Неподдерживаемый формат";
                 return RedirectToAction("Index");
             }
 
-            var str = "";
+            var contentString = "";
             using (var reader = new StreamReader(upload.OpenReadStream()))
             {
-                str = reader.ReadToEnd();
+                contentString = reader.ReadToEnd();
             }
 
-            return RedirectToAction("ImportResult", new {contentString = str, contentType = contentType});
-
-        }
-        
-        public IActionResult ImportResult(string contentString, string contentType)
-        {
-            var importer = contentType switch
-            {
-                "application/json" => new Importer(ImportType.Json),
-                "application/xml" => new Importer(ImportType.Xml),
-                "text/xml" => new Importer(ImportType.Xml),
-                _ => null
-            };
-            
             try
             {
-                var importResult = importer?.ParseContentString<List<ExportImportCredentialViewModel>>(contentString);
-                return View(importResult);
+                var importResult = importer.ParseContentString<List<ExportImportCredentialViewModel>>(contentString);
+                return View("ImportResult", importResult);
             }
             catch
             {
@@ -76,7 +64,7 @@ namespace PasswordManager.Controllers
                 return RedirectToAction("Index");
             }
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> SaveAll(string jsonModel)
         {

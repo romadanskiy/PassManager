@@ -22,6 +22,19 @@ namespace PasswordManager
             ImportType = importType;
         }
 
+        public static Importer CreateImporter(string contentType)
+        {
+            var importer = contentType switch
+            {
+                "application/json" => new Importer(ImportType.Json),
+                "application/xml" => new Importer(ImportType.Xml),
+                "text/xml" => new Importer(ImportType.Xml),
+                _ => null
+            };
+            
+            return importer;
+        }
+
         public T ParseContentString<T>(string contentString)
         {
             return ImportType switch
