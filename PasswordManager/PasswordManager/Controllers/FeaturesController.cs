@@ -11,6 +11,12 @@ namespace PasswordManager.Controllers
     [Authorize(Roles="admin")]
     public class FeaturesController : Controller
     {
+        public IActionResult Index()
+        {
+            var context = new ApplicationContext();
+            var features = context.Features.ToList();
+            return View(features);
+        }
         public IActionResult EditForSubscription(int subscriptionId)
         {
             var context = new ApplicationContext();
@@ -71,6 +77,86 @@ namespace PasswordManager.Controllers
             }
  
             return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var context = new ApplicationContext();
+            var feature = context.Features.FirstOrDefault(f => f.Id == id);
+            if (feature != null)
+            {
+                context.Features.Remove(feature);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var context = new ApplicationContext();
+
+            var feature = context.Features.FirstOrDefault(f => f.Id == id);
+
+            if (feature == null)
+                return NotFound();
+
+            var model = new EditFeatureViewModel
+            {
+                Id = id,
+                Name = feature.Name,
+                ControllerName = feature.ControllerName,
+                Description = feature.Description
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditFeatureViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var context = new ApplicationContext();
+
+                var feature = context.Features.FirstOrDefault(f => f.Id == model.Id);
+
+                if (feature != null)
+                {
+                    feature.Name = model.Name;
+                    feature.ControllerName = model.ControllerName;
+                    feature.Description = model.Description;
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View(model);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateFeatureViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var context = new ApplicationContext();
+                var feature = new Feature
+                {
+                    Name = model.Name,
+                    ControllerName = model.ControllerName,
+                    Description = model.Description
+                };
+                context.Features.Add(feature);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
     }
 }
