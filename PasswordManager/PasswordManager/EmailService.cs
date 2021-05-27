@@ -12,7 +12,7 @@ namespace PasswordManager
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта PasswordManager", "passmanager@yandex.ru"));
+            emailMessage.From.Add(new MailboxAddress("Администрация сайта PasswordManager", "passmanager.info@gmail.com"));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Headers.Add("Precedence", "bulk");
             emailMessage.Subject = subject;
