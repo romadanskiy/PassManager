@@ -11,13 +11,13 @@
     <div class="form-inline">
         <button name="action" class="btn btn-primary mr-3 mb-2" value="generate">Сгенерировать пароль</button>
         <div class="form-group mr-3 mb-2">
-            <input type="text" class="form-control" value="@Model.GeneratedPassword" disabled="disabled">
+            <input id="copy" type="text" class="form-control" value="@Model.GeneratedPassword" disabled="disabled">
             <input type="hidden" asp-for="GeneratedPassword" value="@Model.GeneratedPassword">
         </div>
         @if (@Model.GeneratedPassword != null)
         {
             <button name="action" class="btn btn-primary mr-3 mb-2" value="save">Сохранить</button>
-            <button type="button" class="btn btn-outline-secondary mb-2 copy">Скопировать</button>
+            <button type="button" class="btn btn-outline-secondary mb-2 copy" onclick="copyText('copy')">Скопировать</button>
         }
     </div>
 
@@ -51,4 +51,5 @@
 @section Scripts
 {
     <script src="js/generatorCheckboxes.js"></script>
+    <script src="js/copyText.js"></script>
 }
