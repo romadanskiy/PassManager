@@ -23,6 +23,7 @@ namespace PasswordManager.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        [Display(Name = "Имя пользователя")]
         public string Username { get; set; }
 
         [TempData]
