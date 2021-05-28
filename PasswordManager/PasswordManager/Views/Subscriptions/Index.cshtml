@@ -7,43 +7,57 @@
 
 <a class="btn btn-primary mt-1 mb-3" asp-action="Create">Добавить подписку</a>
 
-<div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Фичи</th>
-                <th>Цена</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var subscription in Model)
-            {
-                <tr>
-                    <td>@subscription.Name</td>
-                    <td style="max-width: 200px">@subscription.Description</td>
-                    <td>
-                        <ul>
-                            @foreach (var feature in subscription.Features)
-                            {
-                                <li>@feature.Name</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>@subscription.Price руб</td>
-                    <td>
-                        <form asp-action="Delete" asp-route-subscriptionId="@subscription.Id">
-                            <a class="btn btn-sm btn-primary my-1" asp-controller="Features" asp-action="EditForSubscription" asp-route-subscriptionId="@subscription.Id">Насторить доступ</a>
-                            <a class="btn btn-sm btn-primary my-1" asp-action="Edit" asp-route-subscriptionId="@subscription.Id">Изменить</a>
-                            <button type="submit" class="btn btn-sm btn-danger my-1">
-                                Удалить
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<table id="super-table" class="table table-hover">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Фичи</th>
+        <th>Цена</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var subscription in Model)
+    {
+        <tr>
+            <td>@subscription.Name</td>
+            <td style="max-width: 200px">@subscription.Description</td>
+            <td>
+                <ul>
+                    @foreach (var feature in subscription.Features)
+                    {
+                        <li>@feature.Name</li>
+                    }
+                </ul>
+            </td>
+            <td>@subscription.Price</td>
+            <td>
+                <form asp-action="Delete" asp-route-subscriptionId="@subscription.Id">
+                    <a class="btn btn-sm btn-primary my-1" asp-controller="Features" asp-action="EditForSubscription" asp-route-subscriptionId="@subscription.Id">Насторить доступ</a>
+                    <a class="btn btn-sm btn-primary my-1" asp-action="Edit" asp-route-subscriptionId="@subscription.Id">Изменить</a>
+                    <button type="submit" class="btn btn-sm btn-danger my-1">
+                        Удалить
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Фичи</th>
+        <th>Цена</th>
+        <th>Action</th>
+    </tr>
+    </tfoot>
+</table>
+
+@section Scripts
+{
+    <script src="js/subscriptionsTable.js"></script>
+}
+
+

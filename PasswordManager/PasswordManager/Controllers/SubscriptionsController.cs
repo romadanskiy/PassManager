@@ -17,6 +17,7 @@ namespace PasswordManager.Controllers
             var subscriptions = context
                 .Subscriptions
                 .Include(s => s.Features)
+                .OrderBy(s=>s.Price)
                 .ToList();
             return View(subscriptions);
         }

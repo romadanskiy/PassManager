@@ -24,7 +24,11 @@ namespace PasswordManager.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var context = new ApplicationContext();
-            var credentials = context.Credentials.Where(c => c.UserId == user.Id).ToList();
+            var credentials = context
+                .Credentials
+                .Where(c => c.UserId == user.Id)
+                .OrderBy(c=>c.Source)
+                .ToList();
             return View(credentials);
         }
 

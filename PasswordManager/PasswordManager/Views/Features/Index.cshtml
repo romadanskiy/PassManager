@@ -3,17 +3,20 @@
     ViewBag.Title = "Список платных фичей";
 }
 
-<h1>Список пользователей</h1>
+<h1>Список фичей</h1>
 
 <a class="btn btn-primary mt-1 mb-3" asp-action="Create">Добавить фичю</a>
  
-<table class="table">
+<table id="super-table" class="table table-hover">
+    <thead>
     <tr>
         <th>Название</th>
         <th>Контроллер</th>
         <th>Описание</th>
         <th>Action</th>
     </tr>
+    </thead>
+    <tbody>
     @foreach (var feature in Model)
     {
         <tr>
@@ -29,6 +32,19 @@
                 </form>
             </td>
         </tr>
-        
     }
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Название</th>
+        <th>Контроллер</th>
+        <th>Описание</th>
+        <th>Action</th>
+    </tr>
+    </tfoot>
 </table>
+
+@section Scripts
+{
+    <script src="js/featuresTable.js"></script>
+}
