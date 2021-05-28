@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PasswordManager.ViewModels
 {
@@ -23,5 +24,7 @@ namespace PasswordManager.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
+        
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
     }
 }
