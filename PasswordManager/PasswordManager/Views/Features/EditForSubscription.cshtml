@@ -3,14 +3,19 @@
     ViewBag.Title = "Изменнение доступа подписки";
 }
 
-<h2>Изменение доступа для подписки @Model.SubscriptionName</h2>
+<h1>Изменение доступа для подписки "@Model.SubscriptionName"</h1>
+
+<a class="btn btn-outline-secondary btn-sm mt-2 mb-3" asp-controller="Features" asp-action="Index">Список фичей</a>
 
 <form method="post" asp-action="EditForSubscription">
     <input type="hidden" name="subscriptionId" value="@Model.SubscriptionId">
     @foreach (var feature in Model.AllFeatures)
     {
-        <input type="checkbox" name="features" value="@feature.Id"
-               @(Model.SubscriptionFeatures.Contains(feature.Id) ? "checked=\"checked\"" : "") />@feature.Name <br />
+        <div class="form-check">
+            <input id="@feature.Id" class="form-check-input" type="checkbox" name="features" value="@feature.Id"
+                   @(Model.SubscriptionFeatures.Contains(feature.Id) ? "checked=\"checked\"" : "") />
+            <label for="@feature.Id" class="form-check-label">@feature.Name</label>
+        </div>
     }
-    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
 </form>
