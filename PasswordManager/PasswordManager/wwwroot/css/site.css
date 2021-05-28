@@ -73,3 +73,7 @@ body {
 .credential-password {
   cursor: pointer;
 }
+
+.table td {
+  vertical-align: middle;
+}
