@@ -67,6 +67,8 @@ namespace PasswordManager.Controllers
                     }
                 }
             }
+
+            model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 
@@ -133,6 +135,8 @@ namespace PasswordManager.Controllers
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
+
+            model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 

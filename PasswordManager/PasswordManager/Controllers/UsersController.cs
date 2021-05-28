@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PasswordManager.Models;
 using PasswordManager.ViewModels;
 
@@ -98,7 +99,11 @@ namespace PasswordManager.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var context = new ApplicationContext();
+            var user = context
+                .Users
+                .Include(u=>u.Credentials)
+                .FirstOrDefault(u => u.Id==id);
             if (user != null)
             {
                 var result = await _userManager.DeleteAsync(user);
