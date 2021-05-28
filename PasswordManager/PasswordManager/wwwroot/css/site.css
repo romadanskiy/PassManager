@@ -81,3 +81,7 @@ body {
 .form-number-input:disabled~.form-number-label {
   color: #6c757d;
 }
+
+#super-table {
+  width: 100%!important;
+}

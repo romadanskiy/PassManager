@@ -6,12 +6,7 @@
         },
         "columnDefs": [
             {
-                "targets": [ 2 ],
-                "searchable": false,
-                "orderable": false
-            },
-            {
-                "targets": [ 3 ],
+                "targets": [ 2, 3 ],
                 "searchable": false,
                 "orderable": false
             }
