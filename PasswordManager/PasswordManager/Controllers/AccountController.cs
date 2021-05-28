@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using PasswordManager.ViewModels;
 using PasswordManager.Models;
@@ -19,12 +21,17 @@ namespace PasswordManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (User.Identity is {IsAuthenticated: true})
                 return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
+
+            var model = new RegisterViewModel
+            {
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
             
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -60,6 +67,8 @@ namespace PasswordManager.Controllers
                     }
                 }
             }
+
+            model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 
@@ -84,12 +93,19 @@ namespace PasswordManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
             if (User.Identity is {IsAuthenticated: true})
                 return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
             
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            var model = new LoginViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+            
+            return View(model);
         }
 
         [HttpPost]
@@ -119,6 +135,8 @@ namespace PasswordManager.Controllers
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
+
+            model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return View(model);
         }
 

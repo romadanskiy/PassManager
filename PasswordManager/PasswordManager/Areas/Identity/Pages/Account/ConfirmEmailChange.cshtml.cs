@@ -44,7 +44,7 @@ namespace PasswordManager.Areas.Identity.Pages.Account
             var result = await _userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
-                StatusMessage = "Error changing email.";
+                StatusMessage = "Ошибка при изменении адреса электронной почты";
                 return RedirectToPage("Manage/Index");
             }
 
@@ -53,12 +53,12 @@ namespace PasswordManager.Areas.Identity.Pages.Account
             var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
             if (!setUserNameResult.Succeeded)
             {
-                StatusMessage = "Error changing user name.";
+                StatusMessage = "Ошибка при изменении имени пользователя.";
                 return RedirectToPage("Manage/Index");
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Thank you for confirming your email change.";
+            StatusMessage = "Спасибо, что подтвердили изменение адреса электронной почты.";
             return RedirectToPage("Manage/Index");
         }
     }
