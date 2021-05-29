@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using PasswordManager.ViewModels;
 
 namespace PasswordManager.Controllers
 {
@@ -20,7 +21,15 @@ namespace PasswordManager.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var context = new ApplicationContext();
+            var features = context.Features.ToList();
+
+            var model = new HomeViewModel
+            {
+                Features = features
+            };
+            
+            return View(model);
         }
 
         public IActionResult Privacy()
