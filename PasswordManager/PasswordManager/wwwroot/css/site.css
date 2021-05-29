@@ -144,3 +144,11 @@ body {
 .pb-25 {
   padding-bottom: 25px;
 }
+
+.support-message {
+  color: #28a745;
+}
+
+.to-answer {
+  cursor: pointer;
+}
