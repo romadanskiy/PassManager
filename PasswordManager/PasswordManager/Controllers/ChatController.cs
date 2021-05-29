@@ -32,7 +32,7 @@ namespace PasswordManager.Controllers
                 else
                 {
                     model.Email = user.Email;
-                    model.Receiver = "kirillaromad@yandex.ru";
+                    model.Receiver = "techsupport";
                 }
             }
             
