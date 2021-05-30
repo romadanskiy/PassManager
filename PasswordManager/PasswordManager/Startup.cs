@@ -1,8 +1,10 @@
+using System.IO.Compression;
 using Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +26,15 @@ namespace PasswordManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient<IEmailSender,EmailService>();
+            // сервис компрессии
+            services.AddResponseCompression(options=>options.EnableForHttps = true);
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
+            
+            //services.AddTransient<IEmailSender,EmailService>(); - не работает
+            
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             
             services.AddRazorPages();
@@ -56,6 +66,10 @@ namespace PasswordManager
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            // подключаем компрессию
+            app.UseResponseCompression();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
