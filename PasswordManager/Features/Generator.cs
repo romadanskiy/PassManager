@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace PasswordManager
+namespace Features
 {
     public class Generator
     {

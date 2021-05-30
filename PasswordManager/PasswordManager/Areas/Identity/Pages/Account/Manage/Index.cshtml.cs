@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PasswordManager.Models;
+using Models;
 
 namespace PasswordManager.Areas.Identity.Pages.Account.Manage
 {

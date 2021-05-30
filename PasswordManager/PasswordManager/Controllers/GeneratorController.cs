@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Features;
 using Microsoft.AspNetCore.Mvc;
 using PasswordManager.ViewModels;
 

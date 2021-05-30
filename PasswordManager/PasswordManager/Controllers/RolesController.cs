@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using PasswordManager.Models;
+using Models;
 using PasswordManager.ViewModels;
  
 namespace PasswordManager.Controllers

@@ -1,11 +1,9 @@
 ﻿using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Microsoft.AspNetCore.Mvc;
 
-namespace PasswordManager
+namespace Features
 {
     public enum ExportType
     {

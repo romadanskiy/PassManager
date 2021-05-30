@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PasswordManager.Models;
+using Models;
 
 [assembly: HostingStartup(typeof(PasswordManager.Areas.Identity.IdentityHostingStartup))]
 namespace PasswordManager.Areas.Identity

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Xml.Serialization;
-using PasswordManager.ViewModels;
 
-namespace PasswordManager
+namespace Features
 {
     public enum ImportType
     {

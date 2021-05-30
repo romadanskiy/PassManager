@@ -1,8 +1,10 @@
-using PasswordManager.Models;
+using System.IO.Compression;
+using Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,17 +26,15 @@ namespace PasswordManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*
-            const string localConStr = "Server=localhost;Port=5432;Database=PasswordManagerDB;User Id=postgres;Password=PAROLsekret777;";
-            const string herokuConStr = "Host=ec2-54-216-185-51.eu-west-1.compute.amazonaws.com;Database=d83gfranh6pqjq;Username=njudcwfmbpluwi;Password=afec3844e82fed075f576e9e261907c929604204d4036cda2f581e3e40d17c3a;sslmode=Require;TrustServerCertificate=true";
+            // сервис компрессии
+            services.AddResponseCompression(options=>options.EnableForHttps = true);
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Optimal;
+            });
             
-            services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(herokuConStr));
-
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
-            */
-            //services.AddTransient<IEmailSender,EmailService>();
+            //services.AddTransient<IEmailSender,EmailService>(); - не работает
+            
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             
             services.AddRazorPages();
@@ -66,6 +66,10 @@ namespace PasswordManager
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            // подключаем компрессию
+            app.UseResponseCompression();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
