@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PasswordManager.Models;
+using Models;
 
 namespace PasswordManager.Areas.Identity.Pages.Account.Manage
 {

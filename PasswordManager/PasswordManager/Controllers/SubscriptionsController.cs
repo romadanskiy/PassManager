@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PasswordManager.Models;
+using Models;
 using PasswordManager.ViewModels;
 
 namespace PasswordManager.Controllers

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PasswordManager.Models;
+using Models;
 
 namespace PasswordManager.ViewModels
 {
