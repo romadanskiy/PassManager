@@ -40,7 +40,7 @@ namespace PasswordManager.Controllers
                         "Account",
                         new { userId = user.Id, code = code },
                         protocol: HttpContext.Request.Scheme);
-                    var emailService = new EmailService();
+                    var emailService = new EmailService.EmailService();
                     await emailService.SendEmailAsync(model.Email, "Confirm your account",
                         $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
                     

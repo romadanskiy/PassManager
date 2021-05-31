@@ -19,7 +19,7 @@ namespace PasswordManager.Areas.Identity.Pages.Account
         public RegisterConfirmationModel(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _sender = new EmailService();
+            _sender = new EmailService.EmailService();
         }
 
         public string Email { get; set; }
