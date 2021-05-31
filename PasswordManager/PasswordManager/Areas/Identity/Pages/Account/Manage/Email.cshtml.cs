@@ -26,7 +26,7 @@ namespace PasswordManager.Areas.Identity.Pages.Account.Manage
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = new EmailService();
+            _emailSender = new EmailService.EmailService();
         }
 
         public string Username { get; set; }

@@ -30,7 +30,7 @@ namespace PasswordManager.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
-            _emailSender = new EmailService();;
+            _emailSender = new EmailService.EmailService();;
         }
 
         [BindProperty]
